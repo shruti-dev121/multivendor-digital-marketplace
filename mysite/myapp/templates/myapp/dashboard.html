@@ -1,0 +1,500 @@
+{% extends 'myapp/base.html' %} {% block body %}
+
+<div class="min-h-screen bg-[#f8fafc] text-slate-900">
+  <!-- Main Layout -->
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside
+      class="hidden lg:flex w-64 min-h-screen bg-white border-r border-slate-200 flex-col"
+    >
+      <!-- Logo -->
+      <div class="h-20 flex items-center px-7 border-b border-slate-200">
+        <div>
+          <h1 class="text-lg font-bold tracking-tight">MarketHub</h1>
+          <p class="text-xs text-slate-400 mt-0.5">Seller Panel</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 px-4 py-6">
+        <p
+          class="px-3 mb-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400"
+        >
+          Workspace
+        </p>
+
+        <a
+          href="{% url 'dashboard' %}"
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-slate-100 text-slate-900 font-medium text-sm"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4-6h2"
+            />
+          </svg>
+          Dashboard
+        </a>
+
+        <a
+          href="{% url 'orders' %}"
+          class="flex items-center gap-3 px-3 py-2.5 mt-1 rounded-lg text-slate-600 hover:bg-slate-50 text-sm transition"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20 7H4a2 2 0 00-2 2v9a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 13h2"
+            />
+          </svg>
+          Orders
+        </a>
+
+        <a
+          href="{% url 'dashboard' %}"
+          class="flex items-center gap-3 px-3 py-2.5 mt-1 rounded-lg text-slate-600 hover:bg-slate-50 text-sm transition"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0H4"
+            />
+          </svg>
+          Products
+        </a>
+
+        <a
+          href="{% url 'sales' %}"
+          class="flex items-center gap-3 px-3 py-2.5 mt-1 rounded-lg text-slate-600 hover:bg-slate-50 text-sm transition"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 19V6l12-3v13M9 19c0 1.1-1.8 2-4 2s-4-.9-4-2 1.8-2 4-2 4 .9 4 2zm12-3c0 1.1-1.8 2-4 2s-4-.9-4-2 1.8-2 4-2 4 .9 4 2z"
+            />
+          </svg>
+          Analytics
+        </a>
+
+        <p
+          class="px-3 mt-8 mb-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400"
+        >
+          Account
+        </p>
+
+        <a
+          href="#"
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 text-sm transition"
+        >
+          Settings
+        </a>
+      </nav>
+
+      <!-- Seller -->
+      <div class="p-4 border-t border-slate-200">
+        <div class="flex items-center gap-3 p-2">
+          <div
+            class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm font-semibold"
+          >
+            S
+          </div>
+
+          <div class="min-w-0">
+            <p class="text-sm font-medium truncate">Seller Account</p>
+            <p class="text-xs text-slate-400">Seller</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="flex-1 min-w-0">
+      <!-- Top Bar -->
+      <header
+        class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-6 lg:px-10"
+      >
+        <div>
+          <h2 class="text-xl font-semibold tracking-tight">Dashboard</h2>
+
+          <p class="text-sm text-slate-500 mt-0.5">
+            Overview of your marketplace activity
+          </p>
+        </div>
+
+        <a
+          href="{% url 'createproduct' %}"
+          class="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-800 transition"
+        >
+          <span class="text-lg leading-none">+</span>
+          Add Product
+        </a>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="p-6 lg:p-10 max-w-[1500px]">
+        <!-- Stats -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+          <!-- Products -->
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-slate-500">Total Products</p>
+
+              <div
+                class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-slate-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <p class="text-2xl font-semibold mt-4">{{ products|length }}</p>
+
+            <p class="text-xs text-slate-400 mt-1">Active listings</p>
+          </div>
+
+          <!-- Orders -->
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-slate-500">Total Orders</p>
+
+              <div
+                class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-slate-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 006 0M9 5h6"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <p class="text-2xl font-semibold mt-4">{{total_orders}}</p>
+
+            <p class="text-xs text-slate-400 mt-1">All time orders</p>
+          </div>
+
+          <!-- Earnings -->
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-slate-500">Total Earnings</p>
+
+              <div
+                class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center"
+              >
+                <span class="text-sm font-semibold"> ₹ </span>
+              </div>
+            </div>
+
+            <!-- FIXED: use total_earnings instead of product.total_sales_amount -->
+            <p class="text-2xl font-semibold mt-4">₹{{ total_earnings }}</p>
+
+            <p class="text-xs text-slate-400 mt-1">From completed orders</p>
+          </div>
+
+          <!-- Rating -->
+          <div class="bg-white border border-slate-200 rounded-xl p-5">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-slate-500">Average Rating</p>
+
+              <div
+                class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center"
+              >
+                <span class="text-sm"> ★ </span>
+              </div>
+            </div>
+
+            <p class="text-2xl font-semibold mt-4">4.8</p>
+
+            <p class="text-xs text-slate-400 mt-1">Based on customer reviews</p>
+          </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="bg-white border border-slate-200 rounded-xl">
+          <!-- Section Header -->
+          <div
+            class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          >
+            <div>
+              <h3 class="font-semibold text-slate-900">Your Products</h3>
+
+              <p class="text-sm text-slate-500 mt-1">
+                Manage your marketplace listings
+              </p>
+            </div>
+
+            <a
+              href="{% url 'createproduct' %}"
+              class="text-sm font-medium text-slate-700 hover:text-slate-900"
+            >
+              + Add Product
+            </a>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 bg-slate-50/70">
+                  <th
+                    class="px-6 py-3 text-xs font-semibold uppercase tracking-wide text-slate-400"
+                  >
+                    Product
+                  </th>
+
+                  <th
+                    class="px-6 py-3 text-xs font-semibold uppercase tracking-wide text-slate-400"
+                  >
+                    Price
+                  </th>
+
+                  <th
+                    class="px-6 py-3 text-xs font-semibold uppercase tracking-wide text-slate-400"
+                  >
+                    Orders
+                  </th>
+
+                  <th
+                    class="px-6 py-3 text-xs font-semibold uppercase tracking-wide text-slate-400"
+                  >
+                    Status
+                  </th>
+
+                  <th
+                    class="px-6 py-3 text-xs font-semibold uppercase tracking-wide text-slate-400 text-right"
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-slate-100">
+                {% for product in products %}
+
+                <tr class="hover:bg-slate-50/60 transition">
+                  <!-- Product -->
+                  <td class="px-6 py-5">
+                    <div class="flex items-center gap-4">
+                      {% if product.file %}
+
+                      <img
+                        src="{{ product.file.url }}"
+                        class="w-11 h-11 rounded-lg object-cover border border-slate-200"
+                      />
+
+                      {% else %}
+
+                      <div
+                        class="w-11 h-11 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400"
+                      >
+                        —
+                      </div>
+
+                      {% endif %}
+
+                      <div class="min-w-0">
+                        <p class="font-medium text-slate-900 truncate max-w-xs">
+                          {{ product.name }}
+                        </p>
+
+                        <p
+                          class="text-xs text-slate-400 mt-1 truncate max-w-xs"
+                        >
+                          {{ product.description }}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- Price -->
+                  <td class="px-6 py-5">
+                    <span class="font-medium text-slate-900">
+                      ₹{{ product.price }}
+                    </span>
+                  </td>
+
+                  <!-- Orders -->
+                  <td class="px-6 py-5 text-sm text-slate-600">
+                    {{ product.total_sales }}
+                  </td>
+
+                  <!-- Status -->
+                  <td class="px-6 py-5">
+                    <span
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 rounded-full bg-emerald-500"
+                      ></span>
+
+                      Active
+                    </span>
+                  </td>
+
+                  <!-- Actions -->
+                  <td class="px-6 py-5">
+                    <div class="flex items-center justify-end gap-4">
+                      <a
+                        href="{% url 'detail' product.id %}"
+                        class="text-sm font-medium text-slate-600 hover:text-slate-900"
+                      >
+                        View
+                      </a>
+
+                      <a
+                        href="{% url 'editproduct' product.id %}"
+                        class="text-sm font-medium text-slate-600 hover:text-slate-900"
+                      >
+                        Edit
+                      </a>
+
+                      <a
+                        href="{% url 'delete' product.id %}"
+                        class="text-sm font-medium text-red-600 hover:text-red-700"
+                      >
+                        Delete
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                  <td colspan="5" class="px-6 py-16 text-center">
+                    <h3 class="font-semibold text-slate-900">
+                      No products yet
+                    </h3>
+
+                    <p class="text-sm text-slate-500 mt-1">
+                      Add your first product to start selling.
+                    </p>
+
+                    <a
+                      href="{% url 'createproduct' %}"
+                      class="inline-flex mt-5 bg-slate-900 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-800"
+                    >
+                      Add Product
+                    </a>
+                  </td>
+                </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Recent Orders -->
+          <div
+            class="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-6"
+          >
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="font-semibold">Recent Orders</h3>
+
+                <p class="text-sm text-slate-500 mt-1">
+                  Your latest customer activity
+                </p>
+              </div>
+
+              <a href="#" class="text-sm font-medium text-slate-600">
+                View all
+              </a>
+            </div>
+
+            <div class="text-sm text-slate-500 py-8 text-center">
+              No recent orders to display.
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="bg-white border border-slate-200 rounded-xl p-6">
+            <h3 class="font-semibold">Quick Actions</h3>
+
+            <div class="mt-5 space-y-2">
+              <a
+                href="{% url 'createproduct' %}"
+                class="flex items-center justify-between px-4 py-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition"
+              >
+                <span class="text-sm font-medium"> Add new product </span>
+
+                <span class="text-slate-400"> → </span>
+              </a>
+
+              <a
+                href="#"
+                class="flex items-center justify-between px-4 py-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition"
+              >
+                <span class="text-sm font-medium"> View orders </span>
+
+                <span class="text-slate-400"> → </span>
+              </a>
+
+              <a
+                href="#"
+                class="flex items-center justify-between px-4 py-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition"
+              >
+                <span class="text-sm font-medium"> Store settings </span>
+
+                <span class="text-slate-400"> → </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    ```
+  </div>
+</div>
+
+{% endblock %}

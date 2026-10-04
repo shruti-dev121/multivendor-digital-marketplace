@@ -1,0 +1,139 @@
+{% extends 'myapp/base.html' %} {% block body %}
+
+<div class="min-h-screen bg-gray-100 py-10">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Page Header -->
+    <div class="max-w-5xl mx-auto mb-8">
+      <form
+        method="GET"
+        action="{% url 'index' %}"
+        class="flex flex-col md:flex-row gap-2"
+      >
+        <!-- Search -->
+        <input
+          type="text"
+          name="q"
+          value="{{ query|default:'' }}"
+          placeholder="Search books..."
+          class="flex-1 border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <!-- Category -->
+        <select
+          name="category"
+          class="border border-gray-300 rounded-md px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Categories</option>
+
+          <option value="Self-Help & Personal Development">
+            Self-Help & Personal Development
+          </option>
+
+          <option value="Business & Finance">Business & Finance</option>
+
+          <option value="Fiction & Literature">Fiction & Literature</option>
+
+          <option value="Technology & Programming">
+            Technology & Programming
+          </option>
+
+          <option value="Education & Career">Education & Career</option>
+        </select>
+
+        <!-- Search Button -->
+        <button
+          type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+    <div class="mb-8">
+      <h1 class="text-2xl font-semibold text-gray-900">Digital Products</h1>
+
+      <p class="text-gray-500 mt-1">Explore and purchase digital products</p>
+    </div>
+
+    <!-- Product Grid -->
+    <div
+      class="product-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      {% for product in products %}
+
+      <!-- Product Card -->
+      <div
+        class="product bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-1"
+      >
+        <!-- Image Section -->
+        <div
+          class="product-image bg-gray-50 h-56 flex items-center justify-center border-b border-gray-100"
+        >
+          {% if product.file %}
+          <img
+            src="{{ product.file.url }}"
+            alt="{{ product.name }}"
+            class="w-full h-full object-contain p-4"
+          />
+          {% else %}
+          <div class="text-gray-400 text-sm">No Image Available</div>
+          {% endif %}
+        </div>
+
+        <!-- Product Information -->
+        <div class="p-5">
+          <!-- Product Name -->
+          <h2 class="text-lg font-semibold text-gray-900 truncate">
+            {{ product.name }}
+          </h2>
+
+          <!-- Description -->
+          <p class="text-sm text-gray-500 mt-2 line-clamp-2 min-h-[40px]">
+            {{ product.description }}
+          </p>
+
+          <!-- Seller -->
+          <div class="flex items-center gap-2 mt-4">
+            <!-- <div
+              class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-sm"
+            >
+              {{ product.seller }}
+            </div> -->
+
+            <!-- <div>
+              <p class="text-xs text-gray-400">Created by</p>
+
+              <p class="text-sm font-medium text-gray-700">
+                {{ product.seller }}
+              </p>
+            </div> -->
+          </div>
+
+          <!-- Price + Button -->
+          <div
+            class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100"
+          >
+            <div>
+              <p class="text-xs text-gray-400">Price</p>
+
+              <p class="text-xl font-bold text-gray-900">
+                ₹{{ product.price }}
+              </p>
+            </div>
+
+            <a
+              href="{% url 'detail' product.id %}"
+              class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2.5 rounded-md transition duration-200"
+            >
+              View Details
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

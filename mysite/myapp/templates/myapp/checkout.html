@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Checkout | ElectroStore</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body class="min-h-screen bg-gray-50">
+    <header class="border-b bg-white">
+      <div class="mx-auto max-w-6xl px-6 py-5">
+        <h1 class="text-2xl font-bold">ElectroStore</h1>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-6 py-12">
+      <h1 class="mb-8 text-3xl font-bold">Checkout</h1>
+
+      <div class="grid gap-8 md:grid-cols-3">
+        <!-- Product -->
+        <div class="rounded-2xl border bg-white p-6 shadow-sm md:col-span-2">
+          <h2 class="mb-6 text-xl font-semibold">Order Summary</h2>
+
+          <div class="flex justify-between border-b pb-6">
+            <div>
+              <h3 class="text-lg font-medium">{{ product.name }}</h3>
+
+              <p class="mt-1 text-sm text-gray-500">Electronics</p>
+            </div>
+
+            <p class="text-lg font-semibold">₹{{ product.price }}</p>
+          </div>
+
+          <div class="mt-6 flex justify-between text-lg font-semibold">
+            <span>Total</span>
+
+            <span> ₹{{ product.price }} </span>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="rounded-2xl border bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-semibold">Payment</h2>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Complete your payment securely using Razorpay.
+          </p>
+
+          <div class="mt-6 rounded-xl bg-gray-50 p-4">
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-500"> Amount </span>
+
+              <span class="text-2xl font-bold"> ₹{{ product.price }} </span>
+            </div>
+          </div>
+
+          <button
+            id="pay-button"
+            type="button"
+            class="mt-6 w-full rounded-xl bg-blue-600 px-5 py-3.5 font-semibold text-white hover:bg-blue-700"
+          >
+            Pay ₹{{ product.price }}
+          </button>
+
+          <p class="mt-5 text-center text-xs text-gray-500">
+            🔒 Secure payment powered by Razorpay
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+      var options = {
+        key: "{{ razorpay_key_id }}",
+
+        amount: "{{ amount }}",
+
+        currency: "INR",
+
+        name: "ElectroStore",
+
+        description: "{{ product.name }}",
+
+        order_id: "{{ razorpay_order_id }}",
+
+        handler: function (response) {
+          fetch("{% url 'payment_success' %}", {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+
+            body:
+              "razorpay_payment_id=" +
+              encodeURIComponent(response.razorpay_payment_id) +
+              "&razorpay_order_id=" +
+              encodeURIComponent(response.razorpay_order_id) +
+              "&razorpay_signature=" +
+              encodeURIComponent(response.razorpay_signature) +
+              "&order_detail_id=" +
+              encodeURIComponent("{{ order_detail_id }}"),
+          })
+            .then(response => response.json())
+
+            .then(data => {
+              if (data.success) {
+                window.location.href = "{% url 'success' %}";
+              } else {
+                window.location.href = "{% url 'fail' %}";
+              }
+            });
+        },
+      };
+
+      var razorpay = new Razorpay(options);
+
+      document.getElementById("pay-button").onclick = function (e) {
+        razorpay.open();
+
+        e.preventDefault();
+      };
+    </script>
+  </body>
+</html>

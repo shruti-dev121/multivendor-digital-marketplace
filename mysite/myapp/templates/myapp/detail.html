@@ -1,0 +1,28 @@
+{% extends 'myapp/base.html' %}
+<!---->
+{% block body %}
+<div class="flex m-15 p-10">
+  <div>
+    <img
+      class="p-15"
+      src="https://media.istockphoto.com/id/1360261804/vector/no-image-photo-template-on-gray-background.jpg?s=612x612&w=0&k=20&c=jR8gH9OmiRzSKZ3bIXsVfh161iuOrjfhqDpHTlTRFr4="
+    />
+  </div>
+  <div class="m-15 p-10 bg-dark-500">
+    <div class="text-gray-700 truncate text-3xl">{{product.name}}</div>
+    <div class="mb-4">{{product.price}}</div>
+    <div class="mb-4 text-green-700 font-bold">{{product.description}}</div>
+
+    <a href="{% url 'create_checkout_order' product.id %}">
+      <button
+        id="checkout-button"
+        class="text-white px-4 py-2 rounded-sm bg-blue-500"
+      >
+        Buy
+      </button>
+    </a>
+  </div>
+  <div></div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,64 @@
+{% extends 'myapp/base.html' %} {% block body %}
+
+<div class="min-h-screen bg-gray-50 py-10 px-4">
+  <div class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <p class="text-sm font-medium text-gray-500 mb-2">Seller Dashboard</p>
+
+      <h1 class="text-3xl font-bold text-gray-900">Edit New Product</h1>
+
+      <p class="mt-2 text-gray-500">
+        Add your product details and make it available in your marketplace.
+      </p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200">
+      <!-- Card Header -->
+      <div class="px-8 py-6 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900">Product Information</h2>
+
+        <p class="text-sm text-gray-500 mt-1">
+          Provide accurate information about your product.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form method="post" enctype="multipart/form-data" class="p-8">
+        {% csrf_token %}
+
+        <div class="space-y-6">{{ product_form.as_p }}</div>
+
+        <!-- Buttons -->
+        <div
+          class="flex items-center justify-end gap-3 mt-8 pt-6 border-t border-gray-200"
+        >
+          <a
+            href="{% url 'index' %}"
+            class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition"
+          >
+            Cancel
+          </a>
+
+          <button
+            type="submit"
+            class="px-6 py-2.5 rounded-lg bg-gray-900 text-white font-medium hover:bg-gray-800 transition"
+          >
+            Update Product
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="m-10">
+      <a
+        class="bg-red-500 text-white px-6 py-3"
+        href="{% url 'delete' product.id %}"
+        >Delete</a
+      >
+    </div>
+  </div>
+</div>
+
+{% endblock %} ```

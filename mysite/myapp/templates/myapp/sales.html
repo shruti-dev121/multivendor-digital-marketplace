@@ -1,0 +1,262 @@
+{% extends 'myapp/base.html' %} {% block body %}
+
+<div class="min-h-screen bg-gray-50 py-10">
+  <div class="max-w-6xl mx-auto px-4">
+    <!-- ================= HEADER ================= -->
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
+    >
+      <div>
+        <p class="text-sm font-medium text-indigo-600 mb-1">Seller Dashboard</p>
+
+        <h1 class="text-3xl font-bold text-gray-900">Sales Statistics</h1>
+
+        <p class="text-gray-500 mt-1">Track your total sales and earnings.</p>
+      </div>
+
+      <a
+        href="{% url 'dashboard' %}"
+        class="inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-medium px-5 py-3 rounded-xl transition duration-200 shadow-sm"
+      >
+        ← Back to Dashboard
+      </a>
+    </div>
+
+    <!-- ================= TOTAL SALES ================= -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-500">Total Sales</p>
+
+          <h2 class="text-4xl font-bold text-gray-900 mt-2">
+            ₹{{ total_sales|floatformat:2 }}
+          </h2>
+
+          <p class="text-sm text-gray-500 mt-2">
+            Total amount earned from your products
+          </p>
+        </div>
+
+        <!-- Rupee Icon -->
+        <div
+          class="w-14 h-14 rounded-xl bg-indigo-50 flex items-center justify-center"
+        >
+          <span class="text-3xl font-bold text-indigo-600"> ₹ </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SALES PERIOD CARDS ================= -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- YEARLY -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <p class="text-sm font-medium text-gray-500">Last 365 Days</p>
+
+        <h2 class="text-3xl font-bold text-gray-900 mt-3">
+          ₹{{ yearly_sum|floatformat:2 }}
+        </h2>
+
+        <p class="text-sm text-gray-400 mt-2">Total sales in the last year</p>
+      </div>
+
+      <!-- MONTHLY -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <p class="text-sm font-medium text-gray-500">Last 30 Days</p>
+
+        <h2 class="text-3xl font-bold text-gray-900 mt-3">
+          ₹{{ monthly_sum|floatformat:2 }}
+        </h2>
+
+        <p class="text-sm text-gray-400 mt-2">Total sales in the last month</p>
+      </div>
+
+      <!-- WEEKLY -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <p class="text-sm font-medium text-gray-500">Last 7 Days</p>
+
+        <h2 class="text-3xl font-bold text-gray-900 mt-3">
+          ₹{{ weekly_sum|floatformat:2 }}
+        </h2>
+
+        <p class="text-sm text-gray-400 mt-2">Total sales in the last week</p>
+      </div>
+    </div>
+
+    <!-- ================= 30 DAYS (1) SALES ================= -->
+
+    <div>
+      <div
+        class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 w-1/2 mb-8"
+      >
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900">30 Day Sales</h2>
+
+          <p class="text-sm text-gray-500 mt-1">
+            Daily sales generated from your products.
+          </p>
+        </div>
+
+        <!-- TABLE -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <!-- TABLE HEADER -->
+            <thead>
+              <tr class="border-b border-gray-200">
+                <th class="py-4 px-4 text-sm font-semibold text-gray-600">
+                  Day
+                </th>
+
+                <th class="py-4 px-4 text-sm font-semibold text-gray-600">
+                  Total Sales
+                </th>
+              </tr>
+            </thead>
+
+            <!-- TABLE BODY -->
+            <tbody>
+              {% for daily_sales_sums in daily_sales_sums %}
+
+              <tr class="border-b border-gray-100 hover:bg-gray-50">
+                <td class="py-4 px-4 text-gray-700">
+                  {{ daily_sales_sums.created_on__date }}
+                </td>
+
+                <td class="py-4 px-4 font-semibold text-green-600">
+                  ₹{{ daily_sales_sums.sum|floatformat:2 }}
+                </td>
+              </tr>
+
+              {% empty %}
+
+              <tr>
+                <td colspan="2" class="py-8 text-center text-gray-400">
+                  No sales data available.
+                </td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= 30 DAYS (2) SALES ================= -->
+      <div
+        class="w-1/2 bg-white rounded-2xl border border-gray-200 shadow-sm p-6"
+      >
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900">Product Sales</h2>
+
+          <p class="text-sm text-gray-500 mt-1">
+            Daily sales generated from your products.
+          </p>
+        </div>
+
+        <!-- TABLE -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <!-- TABLE HEADER -->
+            <thead>
+              <tr class="border-b border-gray-200">
+                <th class="py-4 px-4 text-sm font-semibold text-gray-600">
+                  Product Name
+                </th>
+
+                <th class="py-4 px-4 text-sm font-semibold text-gray-600">
+                  Total Sales
+                </th>
+              </tr>
+            </thead>
+
+            <!-- TABLE BODY -->
+            <tbody>
+              {% for product_sales_sums in product_sales_sums %}
+
+              <tr class="border-b border-gray-100 hover:bg-gray-50">
+                <td class="py-4 px-4 text-gray-700">
+                  {{ product_sales_sums.product__name }}
+                </td>
+
+                <td class="py-4 px-4 font-semibold text-green-600">
+                  ₹{{ product_sales_sums.sum|floatformat:2 }}
+                </td>
+              </tr>
+
+              {% empty %}
+
+              <tr>
+                <td colspan="2" class="py-8 text-center text-gray-400">
+                  No sales data available.
+                </td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="w-full max-w-2xl mx-auto mt-8">
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+
+        <!-- ================= CHART ================= -->
+      </div>
+    </div>
+
+    <!-- ================= FOOTER MESSAGE ================= -->
+    <div class="text-center mt-8">
+      <p class="text-sm text-gray-400">
+        Sales statistics are updated based on successful payments.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================= -->
+<!-- CHART.JS LIBRARY -->
+<!-- ================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ================================================= -->
+<!-- CHART.JS CODE -->
+<!-- ================================================= -->
+
+<script>
+  const ctx = document.getElementById("myChart");
+
+  new Chart(ctx, {
+    type: "bar",
+
+    data: {
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+
+      datasets: [
+        {
+          label: "# of Votes",
+
+          data: [12, 19, 3, 5, 2, 3],
+
+          borderWidth: 1,
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+</script>
+
+{% endblock %} ``` ### What I fixed **1. Added Chart.js** ```html
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+``` This was the main reason for: ```text Chart is not defined ``` **2. Removed
+the duplicate canvas** Your original code had: ```html
+<canvas id="myChart"></canvas>

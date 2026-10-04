@@ -1,0 +1,30 @@
+{% extends 'myapp/base.html' %}
+<!---->
+{% block body %}
+
+<div class="min-h-[80vh] flex items-center justify-center bg-slate-50 px-4">
+  <div class="w-full max-w-md">
+    <div
+      class="bg-white border border-slate-200 rounded-xl shadow-sm p-8 text-center"
+    >
+      <div class="mb-5">
+        <h1 class="text-2xl font-semibold text-slate-900">
+          You have not permission
+        </h1>
+
+        <p class="mt-2 text-sm text-slate-500">
+          Invalid request you have no permission!!!!!
+        </p>
+      </div>
+
+      <a
+        href="{% url 'login' %}"
+        class="inline-block w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-lg transition"
+      >
+        Login Again
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

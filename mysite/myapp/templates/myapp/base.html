@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <title>Bookbazaar-Digital Marketplace</title>
+  </head>
+
+  <body class="bg-slate-50">
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-sm">
+      <div
+        class="flex flex-wrap justify-between items-center mx-auto px-6 py-3"
+      >
+        <!-- Logo -->
+        <a href="{% url 'index' %}" class="flex items-center">
+          <img
+            class="h-14 mr-3"
+            src="https://img.icons8.com/?size=100&id=115625&format=png&color=000000"
+            alt="Digital Marketplace"
+          />
+
+          <span class="text-xl font-semibold text-slate-900">
+            Bookbazaar-Digital Marketplace
+          </span>
+        </a>
+
+        <!-- NAVIGATION -->
+        <div class="flex items-center">
+          {% if user.is_authenticated %}
+
+          <!-- Dashboard -->
+          <a
+            href="{% url 'dashboard' %}"
+            class="mr-6 text-sm font-medium text-slate-600 hover:text-slate-900"
+          >
+            Dashboard
+          </a>
+
+          <!-- Sales -->
+          <a
+            href="{% url 'sales' %}"
+            class="mr-6 text-sm font-medium text-slate-600 hover:text-slate-900"
+          >
+            Sales
+          </a>
+
+          <!-- Orders -->
+          <a
+            href="{% url 'orders' %}"
+            class="mr-6 text-sm font-medium text-slate-600 hover:text-slate-900"
+          >
+            Orders
+          </a>
+
+          <!-- Create Product -->
+          <a
+            href="{% url 'createproduct' %}"
+            class="mr-6 text-sm font-medium text-slate-600 hover:text-slate-900"
+          >
+            Create
+          </a>
+
+          <!-- My Purchases -->
+          <a
+            href="{% url 'purchases' %}"
+            class="mr-6 text-sm font-medium text-slate-600 hover:text-slate-900"
+          >
+            My Purchases
+          </a>
+
+          <!-- User Profile -->
+          <div class="flex items-center gap-3 mr-5">
+            <div
+              class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm font-semibold"
+            >
+              {{ user.username|first|upper }}
+            </div>
+
+            <div class="hidden md:block">
+              <a
+                class="text-sm font-medium text-slate-800"
+                href="{% url 'dashboard' %}"
+              >
+                {{ user.username }}
+              </a>
+
+              <p class="text-xs text-slate-400">Seller</p>
+            </div>
+          </div>
+
+          <!-- Logout -->
+          <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+
+            <button
+              type="submit"
+              class="text-sm font-medium text-red-600 hover:text-red-700"
+            >
+              Logout
+            </button>
+          </form>
+
+          {% else %}
+
+          <!-- Login -->
+          <a
+            href="{% url 'login' %}"
+            class="mr-4 text-sm font-medium text-slate-700 hover:text-slate-900"
+          >
+            Login
+          </a>
+
+          <!-- Register -->
+          <a
+            href="{% url 'register' %}"
+            class="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-slate-800 transition"
+          >
+            Register
+          </a>
+
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    {% block body %} {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </body>
+</html>
